@@ -1,12 +1,13 @@
 # char-rnn 
-A multi-layer Recurrent Neural Network (RNN, LSTM, and GRU) for training/sampling from character-level language models. Created by @karpathy. The input is a single text file and the model learns to predict the next character in the sequence. More info here and here. API by @samim.
+A multi-layer Recurrent Neural Network (RNN, LSTM, and GRU) for training/sampling from character-level language models. Created by @karpathy(https://twitter.com/karpathy). The input is a single text file and the model learns to predict the next character in the sequence. More info here and here. API by @samim(https://twitter.com/samim).
 
 # char-rnn-API
-A API for char-rnn, running on python/flask. 
-I´m hopping to see many public char-rnn micro-api´s with different models spring up, so we can experiment together more easily.	
+An API for char-rnn, running on python/flask. 
+Hoping to see many public char-rnn micro-api´s with different models spring up, so we can experiment together more easily.	
 
 # instructions
-- install torch: http://torch.ch/docs/getting-started.html#
+- install torch: http://torch.ch/docs/getting-started.html
+- install `luarocks install nngraph` and `luarocks install optim`
 - install flask: http://flask.pocoo.org/docs/0.10/installation/
 - install flask flask cors: `pip install -U flask-cors`
 - `git clone https://github.com/samim23/char-rnn-api`
