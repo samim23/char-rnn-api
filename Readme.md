@@ -3,7 +3,9 @@ A multi-layer Recurrent Neural Network (RNN, LSTM, and GRU) for training/samplin
 
 # char-rnn-API
 An API for char-rnn, running on python/flask. 
-Hoping to see many public char-rnn micro-api´s with different models spring up, so we can experiment together more easily.	
+Hoping to see many public char-rnn micro-api´s with different models spring up, so we can experiment together more easily.
+
+![char-rnn-api](https://i.imgur.com/xXY4Jqo.png "char-rnn-api")
 
 # instructions
 - install torch: http://torch.ch/docs/getting-started.html
