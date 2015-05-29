@@ -1,9 +1,9 @@
 # char-rnn 
-A multi-layer Recurrent Neural Network (RNN, LSTM, and GRU) for training/sampling from character-level language models. Created by @karpathy(https://twitter.com/karpathy). The input is a single text file and the model learns to predict the next character in the sequence. More info here and here. API by @samim(https://twitter.com/samim).
+A multi-layer Recurrent Neural Network (RNN, LSTM, and GRU) for training/sampling from character-level language models. The input is a single text file and the model learns to predict the next character in the sequence. More info here and here. Created by (https://twitter.com/karpathy).
 
 # char-rnn-API
-An API for char-rnn, running on python/flask. 
-Hoping to see many public char-rnn micro-api´s with different models spring up, so we can experiment together more easily.
+An API and web frontend for char-rnn, running on python/flask. 
+Hoping to see many public char-rnn micro-api´s with different models spring up, so we can experiment together more easily. Created by (https://twitter.com/samim).
 
 ![char-rnn-api](https://i.imgur.com/xXY4Jqo.png "char-rnn-api")
 
