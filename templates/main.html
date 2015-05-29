@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>char-rnn API</title>
+    <meta charset="utf-8">
+    <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    
+    <style>
+      body{ padding:20px; padding-top:0px;}
+      #form_net_sample{max-width:650px;margin-right:auto;margin-left:auto;}
+      .description{font-weight:200;font-size:13px;}
+      label{margin-top:5px;}
+    </style>
+    
+    <script>
+       function getModels(callback) {        
+        $.ajax({
+          type: "POST",
+          contentType: "application/json; charset=utf-8",
+          url: "/api/v1.0/model",
+          success: function (data) {
+            callback(data);
+          },
+          dataType: "json"
+        });
+      }
+      
+      function getChar(inputdata,callback) {        
+        $.ajax({
+          type: "POST",
+          contentType: "application/json; charset=utf-8",
+          url: "/api/v1.0",
+          data: JSON.stringify(inputdata),
+          success: function (data) {
+            callback(data);
+          },
+          dataType: "json"
+        });
+      }
+      
+      $(function() { 
+        
+        function callbackModels(data){
+          $('#form_model').empty();
+          for(var i=0;i<data.models.length;i++){
+            console.log(data.models[i]);
+            $('#form_model').append('<option val="'+data.models[i]+'">'+data.models[i]+'</option>');
+          }
+        }
+        
+        getModels(callbackModels);
+        
+        function callback(data){
+          console.log(data);
+          $('#form_output').val(data.responds);
+        }
+        
+        $( "#form_net_sample" ).submit(function( event ) {
+          event.preventDefault();
+          var primetext = $('#form_input').val();
+          if(primetext.length <= 0){primetext = 'hello';}
+          
+          var temperature = $('#form_temperature').val();
+          if(temperature <= 0 || temperature > 10){temperature = '1';}
+          var length = $('#form_length').val();
+          if(length < 1 || length > 200000){length = '2000';}
+  
+          var model = $('#form_model').val();
+          if(model.length <= 0){model = '';}
+          
+          var seed = $('#form_seed').val();
+          if(seed.length <= 0){seed = '123';}
+          
+          var sample = $('#form_sample').val();
+          if(sample !== 0 || sample !== 1){sample = '1';}
+          
+          $('#form_input').val('');
+
+          getChar({"primetext":primetext, "temperature":temperature, "length":length, "gpuid":"-1", "model":model,"seed":seed, "sample":sample },callback);
+        });
+        
+      });
+      
+    </script>
+    
+  </head>
+  <body>
+    
+    <form method="post" id="form_net_sample" class="form-group">
+      <h1>char-rnn API</h1>
+      <p>A multi-layer Recurrent Neural Network (RNN, LSTM, and GRU) for training/sampling from character-level language models. Created by <a href="https://twitter.com/karpathy">@karpathy</a>. The input is a single text file and the model learns to predict the next character in the sequence. More info <a target="_blank" href="https://karpathy.github.io/2015/05/21/rnn-effectiveness/">here</a> and <a target="_blank" href="https://github.com/karpathy/char-rnn">here</a>. API by <a href="https://twitter.com/samim">@samim.</a></p>
+      <h3>API calls</h3>
+      Post json request to: <code>http://thisserver.com/api/v1.0</code> 
+      <br/>
+      <code>
+        {"primetext":"mytext", "temperature":"1", "length":"2000", "gpuid":"-1", "model":"model.t7","seed":"123", "sample":"1" }
+      </code>
+      <h3>API query</h3>
+
+      <label for="form_input">Primetext <span class="description">("seed" the state of the LSTM using a given sequence, before we sample. [ ])</span></label>
+      <input name="form_input" type="text" class="form-control" id="form_input" placeholder="your text" value="hello world">
+      
+      <label for="form_temperature">Temperature <span class="description">(temperature of sampling [1])</span></label>
+      <input name="form_temperature" type="text" class="form-control" id="form_temperature" placeholder="1" value="1">
+      
+      <label for="form_length">Length <span class="description">(number of characters to sample [2000])</span></label>
+      <input name="form_length" type="text" class="form-control" id="form_length" placeholder="2000" value="2000">
+    
+      <label for="form_seed">Seed<span class="description"> (random number generator's seed [123])</span></label>
+      <input name="form_seed" type="text" class="form-control" id="form_seed" placeholder="123" value="123">
+
+      <label for="form_sample">Sample <span class="description">( 0 to use max at each timestep, 1 to sample at each timestep [1])</span></label>
+      <select name="form_sample" id="form_sample" class="form-control">
+        <option>0</option>
+        <option selected="selected">1</option>
+      </select>
+      
+      <label for="form_model">Model <span class="description">(model checkpoint to use for sampling. Sorted by date)</span></label>
+      <select name="form_model" id="form_model" class="form-control">
+        <option>model</option>
+      </select>
+      
+      <br/>
+      <button type="submit" class="btn btn-default">Get Responds</button>  
+      <br/><br/>
+      
+      <label for="form_output">Output</label>
+      <textarea disabled name="form_output" id="form_output" class="form-control" rows="15"></textarea>
+    </form>
+  
+  </body>
+</html>
