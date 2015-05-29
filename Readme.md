@@ -1,13 +1,21 @@
-# Char-rnn Quick Start
+# char-rnn 
+A multi-layer Recurrent Neural Network (RNN, LSTM, and GRU) for training/sampling from character-level language models. Created by @karpathy. The input is a single text file and the model learns to predict the next character in the sequence. More info here and here. API by @samim.
 
-1. Sample a trained model: 
-$ th sample.lua cv/lm_lstm_epoch30.00_1.3904.t7 -gpuid -1 -primetext "hello world" -temperature 0.5
- 
-2. enter your text into input.txt
-3. Train model: 
-$ th train.lua -data_dir data/tinyshakespeare -gpuid -1
-4. Wait until training reaches first checkpoint
-5. Sample model:$ th sample.lua cv/some_checkpoint.t7 -gpuid -1 -primetext "hello world" -temperature 0.5
+# char-rnn-API
+A API for char-rnn, running on python/flask. 
+I´m hopping to see many public char-rnn micro-api´s with different models spring up, so we can experiment together more easily.	
+
+# instructions
+- install torch: http://torch.ch/docs/getting-started.html#
+- install flask: http://flask.pocoo.org/docs/0.10/installation/
+- install flask flask cors: `pip install -U flask-cors`
+- `git clone https://github.com/samim23/char-rnn-api`
+- python server.py
+- goto https://thisserver.com:8080
+
+# API calls
+Post json request to: http://thisserver.com/api/v1.0 
+{"primetext":"mytext", "temperature":"1", "length":"2000", "gpuid":"-1", "model":"model.t7","seed":"123", "sample":"1" }
 
 
 # char-rnn
